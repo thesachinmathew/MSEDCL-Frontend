@@ -1,5 +1,4 @@
 
-
 const API_GATEWAY_URL = 'https://YOUR_API_GATEWAY_URL'; // e.g. https://abc123.execute-api.us-east-1.amazonaws.com/prod
 const S3_BUCKET = 'YOUR_S3_BUCKET_NAME';
 const AWS_REGION = 'us-east-1';
@@ -447,3 +446,4 @@ function loadCustomersFromLocalStorage() {
   }
 
 }
+
