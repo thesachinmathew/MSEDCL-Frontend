@@ -3,7 +3,6 @@ const S3_BUCKET = 'YOUR_S3_BUCKET_NAME';
 const AWS_REGION = 'us-east-1';
 
 
-
 // Demo/local customer store
 let customersDatabase = [
   { id: 'CUST001', name: 'Rajesh Kumar', address:'123 MG Road', phone:'+91 98765 43210', email:'rajesh@example.com' },
@@ -448,6 +447,7 @@ function loadCustomersFromLocalStorage() {
   }
 
 }
+
 
 
 
