@@ -14,6 +14,7 @@ let selectedCustomer = null;
 let capturedImage = null;
 let isAnomalyOverride = false;
 
+
 // DOM elements (many pages share same IDs)
 const customerIdInput = document.getElementById && document.getElementById('customerIdInput');
 const customerDropdown = document.getElementById && document.getElementById('customerDropdown');
@@ -445,5 +446,6 @@ function loadCustomersFromLocalStorage() {
   }
 
 }
+
 
 
