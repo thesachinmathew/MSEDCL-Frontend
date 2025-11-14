@@ -1,9 +1,4 @@
-/* script.js – Updated for Capture, Customers, History pages
-   IMPORTANT: replace the placeholders with real endpoints:
-   - API_GATEWAY_URL: your API Gateway base
-   - S3_BUCKET: your S3 bucket name
-   Implementation notes are in comments near functions where needed.
-*/
+
 
 const API_GATEWAY_URL = 'https://YOUR_API_GATEWAY_URL'; // e.g. https://abc123.execute-api.us-east-1.amazonaws.com/prod
 const S3_BUCKET = 'YOUR_S3_BUCKET_NAME';
@@ -450,4 +445,5 @@ function loadCustomersFromLocalStorage() {
   if (v) {
     try { customersDatabase = JSON.parse(v); } catch (e) { }
   }
+
 }
