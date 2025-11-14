@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSEDCL - Meter Reading System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <path d="M18 4L30 12V24L18 32L6 24V12L18 4Z" stroke="url(#gradient)" stroke-width="2.5" fill="none"/>
+                        <circle cx="18" cy="18" r="4" fill="url(#gradient)"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="6" y1="4" x2="30" y2="32">
+                                <stop offset="0%" stop-color="#10B981"/>
+                                <stop offset="100%" stop-color="#F59E0B"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; line-height: 1.2;">
+                    <span class="brand-name" style="font-size: 24px;">MSEDCL</span>
+                    <span style="font-size: 10px; color: var(--gray-500); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Meter Reader</span>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="index.html">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="capture.html">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                            <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707.293l-1 1A1 1 0 015 4H3a2 2 0 00-2 2v8a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2a1 1 0 01-.707-.293l-1-1A1 1 0 0013 2H7z"/>
+                        </svg>
+                        Capture Reading
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="customers.html">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                        Customers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+                        </svg>
+                        History
+                    </a>
+                </li>
+            </ul>
+            <div class="nav-user" onclick="handleLogout()">
+                <div class="user-avatar">
+                    <span id="userInitials">FT</span>
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Field Tech</div>
+                    <div class="user-role" id="userRole">Technician</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Welcome Back, <span id="heroUserName">Technician</span></h1>
+                    <p class="hero-subtitle">Streamline your meter reading process with AI-powered accuracy</p>
+                </div>
+                <div class="hero-actions">
+                    <a href="capture.html" class="btn-hero primary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/>
+                            <path fill-rule="evenodd" d="M8 3a1 1 0 00-.894.553L6.382 5H4a3 3 0 00-3 3v8a3 3 0 003 3h16a3 3 0 003-3V8a3 3 0 00-3-3h-2.382l-.724-1.447A1 1 0 0016 3H8z"/>
+                        </svg>
+                        Start Capturing
+                    </a>
+                    <a href="customers.html" class="btn-hero secondary">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 7a3 3 0 116 0 3 3 0 01-6 0zM11 10a5 5 0 015 5v2H6v-2a5 5 0 015-5z"/>
+                        </svg>
+                        Manage Customers
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-card card-1">
+                    <div class="visual-icon success">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16 28c6.627 0 12-5.373 12-12S22.627 4 16 4 4 9.373 4 16s5.373 12 12 12zm5.707-13.707a1 1 0 00-1.414-1.414L14 19.172l-2.293-2.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7z"/>
+                        </svg>
+                    </div>
+                    <div class="visual-text">
+                        <div class="visual-number">1,247</div>
+                        <div class="visual-label">Readings Today</div>
+                    </div>
+                </div>
+                <div class="visual-card card-2">
+                    <div class="visual-icon warning">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16 28c6.627 0 12-5.373 12-12S22.627 4 16 4 4 9.373 4 16s5.373 12 12 12zm0-20a1 1 0 011 1v8a1 1 0 11-2 0V9a1 1 0 011-1zm0 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+                        </svg>
+                    </div>
+                    <div class="visual-text">
+                        <div class="visual-number">3</div>
+                        <div class="visual-label">Anomalies Detected</div>
+                    </div>
+                </div>
+                <div class="visual-card card-3">
+                    <div class="visual-icon info">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16 28c6.627 0 12-5.373 12-12S22.627 4 16 4 4 9.373 4 16s5.373 12 12 12zM8 12a4 4 0 118 0 4 4 0 01-8 0zm4-2a2 2 0 100 4 2 2 0 000-4zM10 20a4 4 0 018 0H10zm12 0a4 4 0 118 0h-8z"/>
+                        </svg>
+                    </div>
+                    <div class="visual-text">
+                        <div class="visual-number">523</div>
+                        <div class="visual-label">Active Customers</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Stats -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </div>
+                        <div class="stat-trend up">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 3.293l6 6V13.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 012 13.5V9.293l6-6zm5-.5V2a1 1 0 011 1v2.293l-1-1z"/>
+                            </svg>
+                            <span>+12%</span>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Total Readings Today</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-trend up">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 3.293l6 6V13.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 012 13.5V9.293l6-6zm5-.5V2a1 1 0 011 1v2.293l-1-1z"/>
+                            </svg>
+                            <span>+8%</span>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value">98.5%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-trend down">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 12.707l-6-6V3.5A1.5 1.5 0 013.5 2h9A1.5 1.5 0 0114 3.5v3.207l-6 6zm-5-.5V14a1 1 0 001 1h2.293l-1-1z"/>
+                            </svg>
+                            <span>-5%</span>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Anomalies Pending</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-trend up">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 3.293l6 6V13.5a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 012 13.5V9.293l6-6zm5-.5V2a1 1 0 011 1v2.293l-1-1z"/>
+                            </svg>
+                            <span>+23</span>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value">523</div>
+                        <div class="stat-label">Active Customers</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="activity-section">
+            <div class="section-header">
+                <h2 class="section-title">Recent Activity</h2>
+                <a href="history.html" class="section-link">View All →</a>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item success">
+                    <div class="activity-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Reading Captured Successfully</div>
+                        <div class="activity-subtitle">CUST001 - Rajesh Kumar • 1,234.5 kWh</div>
+                    </div>
+                    <div class="activity-time">2 min ago</div>
+                </div>
+
+                <div class="activity-item success">
+                    <div class="activity-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Reading Captured Successfully</div>
+                        <div class="activity-subtitle">CUST045 - Priya Sharma • 987.2 kWh</div>
+                    </div>
+                    <div class="activity-time">15 min ago</div>
+                </div>
+
+                <div class="activity-item warning">
+                    <div class="activity-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Anomaly Detected</div>
+                        <div class="activity-subtitle">CUST023 - Anand Menon • 2,450 kWh (65% increase)</div>
+                    </div>
+                    <div class="activity-time">32 min ago</div>
+                </div>
+
+                <div class="activity-item info">
+                    <div class="activity-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">New Customer Added</div>
+                        <div class="activity-subtitle">CUST524 - Maya Iyer</div>
+                    </div>
+                    <div class="activity-time">1 hour ago</div>
+                </div>
+
+                <div class="activity-item error">
+                    <div class="activity-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Image Unclear - Retake Required</div>
+                        <div class="activity-subtitle">CUST089 - Vikram Reddy</div>
+                    </div>
+                    <div class="activity-time">2 hours ago</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+    <script>
+        // Check authentication and set user info
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentUser = sessionStorage.getItem('currentUser');
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = JSON.parse(currentUser);
+            
+            // Redirect technicians away from dashboard
+            if (user.role === 'technician') {
+                window.location.href = 'capture.html';
+                return;
+            }
+
+            // Update UI with user info
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userRole').textContent = user.role === 'admin' ? 'Admin' : 'Technician';
+            document.getElementById('heroUserName').textContent = user.name;
+            
+            // Set initials
+            const initials = user.name.split(' ').map(n => n[0]).join('');
+            document.getElementById('userInitials').textContent = initials;
+        });
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

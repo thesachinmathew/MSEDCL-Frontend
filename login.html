@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSEDCL - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="brand-icon">
+                    <svg width="48" height="48" viewBox="0 0 36 36" fill="none">
+                        <path d="M18 4L30 12V24L18 32L6 24V12L18 4Z" stroke="url(#gradient)" stroke-width="2.5" fill="none"/>
+                        <circle cx="18" cy="18" r="4" fill="url(#gradient)"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="6" y1="4" x2="30" y2="32">
+                                <stop offset="0%" stop-color="#10B981"/>
+                                <stop offset="100%" stop-color="#F59E0B"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="login-title">MSEDCL</h1>
+                <p class="login-subtitle">Meter Reader</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="userId">User ID</label>
+                    <input type="text" id="userId" class="input" placeholder="Enter your user ID" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="input" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn-hero primary" style="width: 100%; justify-content: center;">
+                    Sign In
+                </button>
+
+                <div id="errorMessage" class="error-message hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"><div id="toastMessage"></div></div>
+
+    <script>
+        // User database
+        const users = {
+            'admin001': { password: '12345678', role: 'admin', name: 'John Doe' },
+            'admin002': { password: '12345678', role: 'admin', name: 'Jane Doe' },
+            'tech001': { password: '12345678', role: 'technician', name: 'Jake Doe' },
+            'tech002': { password: '12345678', role: 'technician', name: 'Jenn Doe' }
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userId = document.getElementById('userId').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Check credentials
+            const user = users[userId];
+            
+            if (!user || user.password !== password) {
+                errorMessage.textContent = 'Invalid user ID or password';
+                errorMessage.classList.remove('hidden');
+                return;
+            }
+
+            // Store user session
+            sessionStorage.setItem('currentUser', JSON.stringify({
+                userId: userId,
+                role: user.role,
+                name: user.name
+            }));
+
+            // Redirect based on role
+            if (user.role === 'admin') {
+                window.location.href = 'index.html'; // Admin dashboard
+            } else {
+                window.location.href = 'capture.html'; // Technician starts at capture page
+            }
+        });
+
+        // Check if already logged in
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                if (user.role === 'admin') {
+                    window.location.href = 'index.html';
+                } else {
+                    window.location.href = 'capture.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

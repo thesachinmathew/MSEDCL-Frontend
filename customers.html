@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MSEDCL – Customers</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="brand-icon"><svg width="28" height="28" viewBox="0 0 36 36" fill="none"><path d="M18 4L30 12V24L18 32L6 24V12L18 4Z" stroke="url(#g)" stroke-width="2.2" fill="none"/><defs><linearGradient id="g" x1="6" y1="4" x2="30" y2="32"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient></defs></svg></div>
+        <div style="display: flex; flex-direction: column; line-height: 1.2;">
+          <span class="brand-name" style="font-size: 20px;">MSEDCL</span>
+          <span style="font-size: 9px; color: var(--gray-500); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Meter Reader</span>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html">Dashboard</a></li>
+        <li class="nav-item"><a href="capture.html">Capture Reading</a></li>
+        <li class="nav-item active"><a href="customers.html">Customers</a></li>
+        <li class="nav-item"><a href="history.html">History</a></li>
+      </ul>
+
+      <div class="nav-user" onclick="handleLogout()">
+        <div class="user-avatar"><span id="userInitials">FT</span></div>
+        <div class="user-info">
+          <div class="user-name" id="userName">Field Tech</div>
+          <div class="user-role" id="userRole">Technician</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+    <section class="card" style="padding:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2>Customers</h2>
+        <div>
+          <button id="openCreateFromCustomers" class="btn-hero primary">+ Add Customer</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <input id="customerListSearch" placeholder="Search by ID / name / phone..." class="input" />
+      </div>
+
+      <div id="customersList" style="display:flex; flex-direction:column; gap:8px;">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- reuse modal -->
+    <div id="createCustomerModal" class="modal hidden">
+      <div class="modal-card">
+        <h3>Create New Customer</h3>
+        <form id="createCustomerForm">
+          <label>Customer ID</label>
+          <input id="newCustomerId" required class="input" />
+          <label>Name</label>
+          <input id="customerName" required class="input" />
+          <label>Address</label>
+          <input id="customerAddress" class="input" />
+          <label>Phone</label>
+          <input id="customerPhone" class="input" />
+          <label>Email</label>
+          <input id="customerEmail" class="input" />
+          <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:10px;">
+            <button id="cancelModalBtn" type="button" class="btn-hero secondary">Cancel</button>
+            <button type="submit" class="btn-hero primary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"><div id="toastMessage"></div></div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Check authentication and set user info
+    window.addEventListener('DOMContentLoaded', () => {
+      const currentUser = sessionStorage.getItem('currentUser');
+      
+      if (!currentUser) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const user = JSON.parse(currentUser);
+      
+      // Redirect technicians away from customers page
+      if (user.role === 'technician') {
+        alert('Access Denied: Only admins can access the Customers page.');
+        window.location.href = 'capture.html';
+        return;
+      }
+
+      // Update UI with user info
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userRole').textContent = user.role === 'admin' ? 'Admin' : 'Technician';
+      
+      // Set initials
+      const initials = user.name.split(' ').map(n => n[0]).join('');
+      document.getElementById('userInitials').textContent = initials;
+
+      // Load customers
+      renderCustomerList();
+      document.getElementById('customerListSearch').addEventListener('input', renderCustomerList);
+    });
+
+    function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        sessionStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+      }
+    }
+
+    // small glue so customers page opens modal when clicked
+    document.getElementById('openCreateFromCustomers').addEventListener('click', () => {
+      openCreateCustomerModal();
+    });
+
+    function renderCustomerList() {
+      const q = (document.getElementById('customerListSearch').value || '').toLowerCase();
+      const container = document.getElementById('customersList');
+      container.innerHTML = '';
+      const filtered = customersDatabase.filter(c =>
+        c.id.toLowerCase().includes(q) ||
+        c.name.toLowerCase().includes(q) ||
+        (c.phone || '').toLowerCase().includes(q)
+      );
+      if (!filtered.length) {
+        container.innerHTML = `<div class="hint">No customers found</div>`;
+        return;
+      }
+      filtered.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'card';
+        el.style.padding = '12px';
+        el.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-weight:700">${c.id} – ${c.name}</div>
+              <div style="color:var(--gray-600); margin-top:6px; font-size:13px;">${c.address || ''} • ${c.phone || ''} • ${c.email || ''}</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn-hero secondary btn-edit">Edit</button>
+              <button class="btn-hero" style="background:#fff; border:1px solid #eee;" data-id="${c.id}">Select</button>
+            </div>
+          </div>
+        `;
+        // select button sets into capture page localStorage to preselect
+        el.querySelector('button[data-id]')?.addEventListener('click', () => {
+          localStorage.setItem('preselectCustomer', c.id);
+          showToast('Customer selected. Go to Capture page.', 'success');
+        });
+        el.querySelector('.btn-edit')?.addEventListener('click', () => {
+          // prefill modal to edit; (simple replace on save)
+          openCreateCustomerModal();
+          document.getElementById('newCustomerId').value = c.id;
+          document.getElementById('customerName').value = c.name;
+          document.getElementById('customerAddress').value = c.address;
+          document.getElementById('customerPhone').value = c.phone;
+          document.getElementById('customerEmail').value = c.email;
+          // remove current ID so save will treat as update (we will replace)
+        });
+        container.appendChild(el);
+      });
+    }
+  </script>
+</body>
+</html>
